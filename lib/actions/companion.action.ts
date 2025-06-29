@@ -170,10 +170,10 @@ export const newCompanionPermissions = async () => {
 
   if(has( { plan : 'pro'})){
     return true;
-  }else if(has({ feature: "3_companion_limit"})){
-    limit = 3;
-  }else if(has({feature: "10_companion_limit"})){
-    limit = 10;
+  }else if(has({ feature: "11_companion_limit"})){
+    limit = 11;
+  }else if(has({feature: "22_companion_limit"})){
+    limit = 22;
   }
 
   const { data, error } = await supabase
