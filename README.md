@@ -23,8 +23,8 @@
 | Plan            | Monthly Price | Companion Limit |
 |-----------------|----------------|------------------|
 | **Basic Version**     | Free          | 11 companions     |
-| **Core Learner**      | $19/month     | 22 companions     |
-| **Pro Companion**     | Custom        | Unlimited         |
+| **Core Learner**      | $29/month     | 22 companions     |
+| **Pro Companion**     | $49/month     | Unlimited         |
 
 ---
 
