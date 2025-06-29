@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 import React from 'react';
 import CompanionCard from '@/components/ui/CompanionCard';
 import CompanionsList from '@/components/ui/CompanionsList';
