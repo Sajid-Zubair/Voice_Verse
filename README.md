@@ -79,7 +79,7 @@ Coming soon! Contributions, ideas, or feedback will be more than welcome.
 
 ## 📬 Contact
 
-Linkdin : (https://github.com/Sajid-Zubair)  
+Linkdin : (https://www.linkedin.com/in/sajid-zubair-72a25228b/)
 If you’d like to collaborate or have suggestions, feel free to open an issue or reach out!
 
 ---
