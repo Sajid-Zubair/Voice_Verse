@@ -2,6 +2,14 @@
 import { auth } from "@clerk/nextjs/server";
 import { createSupabaseClient } from "@/lib/supabase";
 
+export interface Companion {
+  id: string;
+  name: string;
+  topic: string;
+  subject: string;
+  duration: number;
+}
+
 
 export const createCompanion = async (formData : CreateCompanion) => {
     const { userId : author } = await auth();
@@ -54,8 +62,88 @@ export const getCompanion = async (id: string) => {
                         .select()
                         .eq('id', id)
     
-    if(error)   return console.log(error)
+    // if(error)   return console.log(error)
+    if (error || !data || data.length === 0) {
+    throw new Error(error?.message || "Companion not found");
+    }
 
     return data[0]
 
+}
+
+export const addToSessionHistory = async (companionId : string) =>{
+    const {userId} = await auth();
+    const supabase = createSupabaseClient();
+
+    const { data, error } = await supabase.from('session_history')
+    .insert({
+        companion_id: companionId,
+        user_id: userId
+    })
+
+    if(error) throw new Error(error.message)  
+
+    return data;
+}
+
+// export const getRecentSessions = async (limit = 10) => {
+//     const supabase = createSupabaseClient();
+//     const { data, error} = await supabase
+//     .from('session_history')
+//     .select(`companions:companion_id(*)`)
+//     .order('created_at', { ascending: false })
+//     .limit(limit)
+
+//     if(error)   throw new Error(error.message);
+    
+//     return data.map(( {companions }) => companions)
+// }
+
+export const getRecentSessions = async (limit = 10): Promise<Companion[]> => {
+  const supabase = createSupabaseClient();
+
+  const { data, error } = await supabase
+    .from("session_history")
+    .select("*, companion:companion_id(*)")  // fetch all session_history fields and companion object
+    .order("created_at", { ascending: false })
+    .limit(limit * 2);  // fetch extra to handle duplicates
+
+  if (error || !data) {
+    throw new Error(error?.message || "Failed to fetch sessions");
+  }
+
+  const seen = new Set<string>();
+  const uniqueCompanions: Companion[] = [];
+
+  for (const row of data) {
+    const companion = row.companion as Companion | undefined;
+
+    if (companion && companion.id && !seen.has(companion.id)) {
+      seen.add(companion.id);
+      uniqueCompanions.push(companion);
+    }
+
+    if (uniqueCompanions.length >= limit) break;
+  }
+
+  return uniqueCompanions;
+};
+
+
+
+
+
+
+export const getUserSessions = async (userId: string, limit = 10) => {
+    const supabase = createSupabaseClient();
+    const { data, error} = await supabase
+    .from('session_history')
+    .select(`companions:companion_id(*)`)
+    .eq('user_id', userId)
+    .order('created_at', { ascending: false })
+    .limit(limit)
+
+    if(error)   throw new Error(error.message);
+    
+    return data.map(( {companions }) => companions)
 }
