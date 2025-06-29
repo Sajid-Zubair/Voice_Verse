@@ -79,7 +79,7 @@ Coming soon! Contributions, ideas, or feedback will be more than welcome.
 
 ## 📬 Contact
 
-Made with 💙 by [Sajid Zubair](https://github.com/Sajid-Zubair)  
+Linkdin : (https://github.com/Sajid-Zubair)  
 If you’d like to collaborate or have suggestions, feel free to open an issue or reach out!
 
 ---
