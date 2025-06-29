@@ -147,3 +147,16 @@ export const getUserSessions = async (userId: string, limit = 10) => {
     
     return data.map(( {companions }) => companions)
 }
+
+export const getUserCompanions = async (userId: string): Promise<Companion[]> => {
+  const supabase = createSupabaseClient();
+
+  const { data, error } = await supabase
+    .from('companions')
+    .select()
+    .eq('author', userId);
+
+  if (error || !data) throw new Error(error?.message || "Failed to fetch companions");
+
+  return data;
+};
